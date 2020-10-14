@@ -14,6 +14,23 @@ copilot init --app demo                  \
   --deploy
 ```
 
+Then 
+```
+copilot job init --name job \
+  --schedule @hourly
+  --dockerfile ./Job.dockerfile
+  
+copilot job deploy
+```
+
+and 
+
+```
+copilot pipeline init 
+
+copilot pipeline update
+```
+
 Copilot will set up the following resources in your account:
 * A VPC
 * Subnets/Security Groups
