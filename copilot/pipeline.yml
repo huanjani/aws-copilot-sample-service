@@ -15,7 +15,7 @@ source:
   # has the following properties: repository, branch.
   properties:
     access_token_secret: github-token-sample-aws-copilot-sample-service
-    branch: main
+    branch: master
     repository: https://github.com/huanjani/aws-copilot-sample-service
 
 # The deployment section defines the order the pipeline will deploy
