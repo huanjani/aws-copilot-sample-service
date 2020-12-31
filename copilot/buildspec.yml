@@ -9,8 +9,8 @@ phases:
       - echo "cd into $CODEBUILD_SRC_DIR"
       - cd $CODEBUILD_SRC_DIR
       # Download the copilot linux binary.
-      - wget https://ecs-cli-v2-release.s3.amazonaws.com/copilot-linux-v1.0.0-19-gd457a88
-      - mv ./copilot-linux-v1.0.0-19-gd457a88 ./copilot-linux
+      - wget https://ecs-cli-v2-release.s3.amazonaws.com/copilot-linux-v1.0.0-45-gdfdfdbd0
+      - mv ./copilot-linux-v1.0.0-45-gdfdfdbd0 ./copilot-linux
       - chmod +x ./copilot-linux
   build:
     commands:
@@ -50,6 +50,7 @@ phases:
           if [ -f "$ADDONSFILE" ]; then
             tmp=$(mktemp)
             timestamp=$(date +%s)
+            aws s3 cp "$ADDONSFILE" "s3://stackset-sample-infrastr-pipelinebuiltartifactbuc-j2gddpdvpa6p/manual/$timestamp/$workload.addons.stack.yml";
             aws s3 cp "$ADDONSFILE" "s3://stackset-sample-infrastr-pipelinebuiltartifactbuc-o2gcimkgqm0i/manual/$timestamp/$workload.addons.stack.yml";
             jq --arg a "https://stackset-sample-infrastr-pipelinebuiltartifactbuc-o2gcimkgqm0i.s3.us-west-2.amazonaws.com/manual/$timestamp/$workload.addons.stack.yml" '.Parameters.AddonsTemplateURL = $a' ./infrastructure/$workload-envwvpc.params.json > "$tmp" && mv "$tmp" ./infrastructure/$workload-envwvpc.params.json
           fi
