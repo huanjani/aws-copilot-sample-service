@@ -9,8 +9,8 @@ phases:
       - echo "cd into $CODEBUILD_SRC_DIR"
       - cd $CODEBUILD_SRC_DIR
       # Download the copilot linux binary.
-      - wget https://ecs-cli-v2-release.s3.amazonaws.com/copilot-linux-v1.0.0-48-g766458ae
-      - mv ./copilot-linux-v1.0.0-48-g766458ae ./copilot-linux
+      - wget https://ecs-cli-v2-release.s3.amazonaws.com/copilot-linux-v1.0.0
+      - mv ./copilot-linux-v1.0.0 ./copilot-linux
       - chmod +x ./copilot-linux
   build:
     commands:
@@ -21,7 +21,7 @@ phases:
       - ls -l
       - export COLOR="false"
       # First, upgrade the cloudformation stack of every environment.
-      - ./copilot-linux env upgrade --all
+      - ./copilot-linux env upgrade -n east-1-env
       # Find all the local services in the workspace.
       - svcs=$(./copilot-linux svc ls --local --json | jq '.services[].name' | sed 's/"//g')
       # Find all the local jobs in the workspace.
