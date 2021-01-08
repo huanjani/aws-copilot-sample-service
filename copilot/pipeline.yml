@@ -22,7 +22,7 @@ source:
 stages:
     - # The name of the environment to deploy to.
       name: envwvpc
-    - name: east-1-env
+    - name: another-region
       # Optional: flag for manual approval action before deployment.
       # requires_approval: true
       # Optional: use test commands to validate this stage of your build.
