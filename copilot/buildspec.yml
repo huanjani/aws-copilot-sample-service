@@ -21,7 +21,7 @@ phases:
       - ls -l
       - export COLOR="false"
       # First, upgrade the cloudformation stack of every environment.
-      - ./copilot-linux env upgrade --all
+      - ./copilot-linux env upgrade -n test
       # Find all the local services in the workspace.
       - svcs=$(./copilot-linux svc ls --local --json | jq '.services[].name' | sed 's/"//g')
       # Find all the local jobs in the workspace.
@@ -50,8 +50,8 @@ phases:
           if [ -f "$ADDONSFILE" ]; then
             tmp=$(mktemp)
             timestamp=$(date +%s)
+            aws s3 cp "$ADDONSFILE" "s3://stackset-muckles-infrast-pipelinebuiltartifactbuc-lrmhl1pmv87o/manual/$timestamp/$workload.addons.stack.yml";
             aws s3 cp "$ADDONSFILE" "s3://stackset-muckles-infrast-pipelinebuiltartifactbuc-7v78qy9u58yp/manual/$timestamp/$workload.addons.stack.yml";
-            jq --arg a "https://stackset-muckles-infrast-pipelinebuiltartifactbuc-7v78qy9u58yp.s3.us-west-1.amazonaws.com/manual/$timestamp/$workload.addons.stack.yml" '.Parameters.AddonsTemplateURL = $a' ./infrastructure/$workload-diff-region.params.json > "$tmp" && mv "$tmp" ./infrastructure/$workload-diff-region.params.json
             aws s3 cp "$ADDONSFILE" "s3://stackset-muckles-infrast-pipelinebuiltartifactbuc-1g8q2h0klurc6/manual/$timestamp/$workload.addons.stack.yml";
             jq --arg a "https://stackset-muckles-infrast-pipelinebuiltartifactbuc-1g8q2h0klurc6.s3.us-west-2.amazonaws.com/manual/$timestamp/$workload.addons.stack.yml" '.Parameters.AddonsTemplateURL = $a' ./infrastructure/$workload-test.params.json > "$tmp" && mv "$tmp" ./infrastructure/$workload-test.params.json
           fi
