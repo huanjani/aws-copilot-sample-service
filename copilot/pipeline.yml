@@ -1,7 +1,7 @@
 # This YAML file defines the relationship and deployment ordering of your environments.
 
 # The name of the pipeline
-name: pipeline-sample-huanjani-aws-copilot-sample-service
+name: pipeline-muckles-huanjani-aws-copilot-sample-service
 
 # The version of the schema used in this template
 version: 1
@@ -14,7 +14,7 @@ source:
   # the artifacts should be sourced from. For example, the GitHub provider
   # has the following properties: repository, branch.
   properties:
-    access_token_secret: github-token-sample-aws-copilot-sample-service
+    access_token_secret: github-token-muckles-aws-copilot-sample-service
     branch: main
     repository: https://github.com/huanjani/aws-copilot-sample-service
 
@@ -22,14 +22,14 @@ source:
 # to your environments.
 stages:
     - # The name of the environment to deploy to.
-      name: envwvpc
+      name: test
       # Optional: flag for manual approval action before deployment.
       # requires_approval: true
       # Optional: use test commands to validate this stage of your build.
       # test_commands: [echo 'running tests', make test]
 
     - # The name of the environment to deploy to.
-      name: another-region
+      name: diff-region
       # Optional: flag for manual approval action before deployment.
       # requires_approval: true
       # Optional: use test commands to validate this stage of your build.
