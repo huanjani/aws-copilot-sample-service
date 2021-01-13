@@ -15,7 +15,7 @@ source:
   # has the following properties: repository, branch.
   properties:
     branch: master
-    repository: https://us-west-2.console.aws.amazon.com/codesuite/codecommit/repositories/aws-sample
+    repository: https://us-west-2.console.aws.amazon.com/codesuite/codecommit/repositories/aws-sample/browse
 
 # The deployment section defines the order the pipeline will deploy
 # to your environments.

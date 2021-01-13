@@ -20,7 +20,7 @@ phases:
     commands:
       - ls -l
       - export COLOR="false"
-      # First, upgrade the cloudformation stack of every environment in the pipeline.
+      # First, upgrade the cloudformation stack of every environment.
       - pipeline=$(cat $CODEBUILD_SRC_DIR/copilot/pipeline.yml | ruby -ryaml -rjson -e 'puts JSON.pretty_generate(YAML.load(ARGF))')
       - pl_envs=$(echo $pipeline | jq '.stages[].name' | sed 's/"//g')
       - >
