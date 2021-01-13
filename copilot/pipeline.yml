@@ -15,13 +15,20 @@ source:
   # has the following properties: repository, branch.
   properties:
     branch: master
-    repository: https://us-west-2.console.aws.amazon.com/codesuite/codecommit/repositories/aws-sample/browse
+    repository: https://us-west-2.console.aws.amazon.com/codesuite/codecommit/repositories/aws-sample
 
 # The deployment section defines the order the pipeline will deploy
 # to your environments.
 stages:
     - # The name of the environment to deploy to.
       name: test
+      # Optional: flag for manual approval action before deployment.
+      # requires_approval: true
+      # Optional: use test commands to validate this stage of your build.
+      # test_commands: [echo 'running tests', make test]
+
+    - # The name of the environment to deploy to.
+      name: diff-acct
       # Optional: flag for manual approval action before deployment.
       # requires_approval: true
       # Optional: use test commands to validate this stage of your build.
