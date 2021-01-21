@@ -9,12 +9,13 @@ version: 1
 # This section defines the source artifacts.
 source:
   # The name of the provider that is used to store the source artifacts.
-  provider: BitBucket
+  provider: Bitbucket
   # Additional properties that further specifies the exact location
   # the artifacts should be sourced from. For example, the GitHub provider
   # has the following properties: repository, branch.
   properties:
-    branch: main
+    ConnectionARN: arn:aws:codestar-connections:us-west-2:240594714208:connection/65940506-25ae-46be-a0b4-134dffc1ef12
+    branch: master
     repository: https://huanjani@bitbucket.org/huanjani/aws-copilot-sample-service
 
 # The deployment section defines the order the pipeline will deploy
