@@ -15,7 +15,7 @@ source:
   # has the following properties: repository, branch.
   properties:
     ConnectionARN: arn:aws:codestar-connections:us-west-2:240594714208:connection/65940506-25ae-46be-a0b4-134dffc1ef12
-    branch: master
+    branch: main
     repository: https://huanjani@bitbucket.org/huanjani/aws-copilot-sample-service
 
 # The deployment section defines the order the pipeline will deploy
