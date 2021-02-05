@@ -1,7 +1,7 @@
 # This YAML file defines the relationship and deployment ordering of your environments.
 
 # The name of the pipeline
-name: pipeline-muckles-aws-sample
+name: pipeline-muckles-huanjani-aws-copilot-sample-service
 
 # The version of the schema used in this template
 version: 1
@@ -9,13 +9,13 @@ version: 1
 # This section defines the source artifacts.
 source:
   # The name of the provider that is used to store the source artifacts.
-  provider: CodeCommit
+  provider: Bitbucket
   # Additional properties that further specifies the exact location
   # the artifacts should be sourced from. For example, the GitHub provider
   # has the following properties: repository, branch.
   properties:
     branch: master
-    repository: https://us-west-2.console.aws.amazon.com/codesuite/codecommit/repositories/aws-sample/browse
+    repository: https://huanjani@bitbucket.org/huanjani/aws-copilot-sample-service
 
 # The deployment section defines the order the pipeline will deploy
 # to your environments.
