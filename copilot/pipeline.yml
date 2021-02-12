@@ -1,7 +1,7 @@
 # This YAML file defines the relationship and deployment ordering of your environments.
 
 # The name of the pipeline
-name: pipeline-muckles-aws-sample-adding
+name: pipeline-changingAppName-changingRepoName-adding
 
 # The version of the schema used in this template
 version: 1
