@@ -1,7 +1,7 @@
 # This YAML file defines the relationship and deployment ordering of your environments.
 
 # The name of the pipeline
-name: pipeline-knuckles-aws-sample301234567890123456785012345678601234567870123456788012345678901234567100
+name: pipeline-knuckles-aws-sample30123456789012345678501234567860123456787012345678801234567890123456710012345678901234567820
 
 # The version of the schema used in this template
 version: 1
