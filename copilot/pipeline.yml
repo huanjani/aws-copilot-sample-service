@@ -1,20 +1,22 @@
 # This YAML file defines the relationship and deployment ordering of your environments.
 
 # The name of the pipeline
-name: addingI2345678901234567890pipeline-making-this-exactly-seventy-nine-characters-longgg
+name: pipeline-muckles-huanjani-aws-copilot-sample-service54567860123456789012345678901234567890123456789012345678901234567890
+
 # The version of the schema used in this template
 version: 1
 
 # This section defines the source artifacts.
 source:
   # The name of the provider that is used to store the source artifacts.
-  provider: CodeCommit
+  provider: GitHub
   # Additional properties that further specifies the exact location
   # the artifacts should be sourced from. For example, the GitHub provider
   # has the following properties: repository, branch.
   properties:
-    branch: master
-    repository: https://us-west-2.console.aws.amazon.com/codesuite/codecommit/repositories/aws-sample/browse
+    access_token_secret: github-token-muckles-aws-copilot-sample-service
+    branch: main
+    repository: https://github.com/huanjani/aws-copilot-sample-service
 
 # The deployment section defines the order the pipeline will deploy
 # to your environments.
