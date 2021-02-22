@@ -1,0 +1,90 @@
+Transform: AWS::SecretsManager-2020-07-23
+Parameters:
+  App:
+    Type: String
+    Description: Your application's name.
+  Env:
+    Type: String
+    Description: The environment name your service, job, or workflow is being deployed to.
+  Name:
+    Type: String
+    Description: The name of the service, job, or workflow being deployed.
+Resources:
+  RDSCluster:
+    Type: 'AWS::RDS::DBCluster'
+    Properties:
+      MasterUsername: !Sub '{{resolve:secretsmanager:${MyRDSInstanceRotationSecret}::username}}'
+      MasterUserPassword: !Sub '{{resolve:secretsmanager:${MyRDSInstanceRotationSecret}::password}}'
+      Engine: aurora-postgresql
+      EnableHttpEndpoint: true
+      EngineMode: serverless
+      DatabaseName: !Ref Name
+      DBSubnetGroupName:
+        Ref: MyDBSubnetGroup
+      VpcSecurityGroupIds:
+        - Fn::ImportValue:
+            !Sub "${App}-${Env}-EnvironmentSecurityGroup"
+      ScalingConfiguration:
+        AutoPause: true
+        MinCapacity: 4
+        MaxCapacity: 8
+        SecondsUntilAutoPause: 1000
+  MyDBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: "Api Database Subnet Group"
+      SubnetIds:
+        Fn::Split:
+          - ","
+          -  Fn::ImportValue:
+               !Sub "${App}-${Env}-PrivateSubnets"
+  MyRDSInstanceRotationSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Description: 'This is my rds cluster secret'
+      GenerateSecretString:
+        SecretStringTemplate: !Sub '{"username": "${Name}"}'
+        GenerateStringKey: "password"
+        PasswordLength: 16
+        ExcludePunctuation: true
+
+  SecretRDSInstanceAttachment:
+    Type: AWS::SecretsManager::SecretTargetAttachment
+    Properties:
+      SecretId: !Ref MyRDSInstanceRotationSecret
+      TargetId: !Ref RDSCluster
+      TargetType: AWS::RDS::DBCluster
+
+  MySecretRotationSchedule:
+    Type: AWS::SecretsManager::RotationSchedule
+    DependsOn: SecretRDSInstanceAttachment
+    Properties:
+      SecretId: !Ref MyRDSInstanceRotationSecret
+      HostedRotationLambda:
+        RotationType: MySQLSingleUser
+        RotationLambdaName: SecretsManagerRotation
+        VpcSecurityGroupIds:
+          Fn::ImportValue:
+            !Sub "${App}-${Env}-EnvironmentSecurityGroup"
+        VpcSubnetIds:
+          Fn::ImportValue:
+            !Sub "${App}-${Env}-PrivateSubnets"
+      RotationRules:
+        AutomaticallyAfterDays: 30
+
+Outputs:
+  DBHOST:
+    Description: "Database endpoint"
+    Value: !GetAtt RDSCluster.Endpoint.Address
+  DB:
+    Description: "Database name"
+    Value: !Ref Name
+  DBUSER:
+    Description: "Database username"
+    Value: !Ref Name
+  DBPORT:
+    Description: "Database port"
+    Value: 5432
+  DBPASS:
+    Description: "Database secret password"
+    Value: !Join [ "", [ !Ref "MyRDSInstanceRotationSecret", ":password" ] ]
