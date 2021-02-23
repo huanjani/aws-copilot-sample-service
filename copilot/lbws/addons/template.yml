@@ -1,4 +1,3 @@
-Transform: AWS::SecretsManager-2020-07-23
 Parameters:
   App:
     Type: String
@@ -10,81 +9,38 @@ Parameters:
     Type: String
     Description: The name of the service, job, or workflow being deployed.
 Resources:
-  RDSCluster:
-    Type: 'AWS::RDS::DBCluster'
+  DynamoDbAccessPolicy:
+    Metadata:
+      'aws:copilot:description': 'An IAM ManagedPolicy for your service to access the demo-ecs db'
+    Type: AWS::IAM::ManagedPolicy
     Properties:
-      MasterUsername: !Sub '{{resolve:secretsmanager:${MyRDSInstanceRotationSecret}::username}}'
-      MasterUserPassword: !Sub '{{resolve:secretsmanager:${MyRDSInstanceRotationSecret}::password}}'
-      Engine: aurora-postgresql
-      EnableHttpEndpoint: true
-      EngineMode: serverless
-      DatabaseName: !Ref Name
-      DBSubnetGroupName:
-        Ref: MyDBSubnetGroup
-      VpcSecurityGroupIds:
-        - Fn::ImportValue:
-            !Sub "${App}-${Env}-EnvironmentSecurityGroup"
-      ScalingConfiguration:
-        AutoPause: true
-        MinCapacity: 4
-        MaxCapacity: 8
-        SecondsUntilAutoPause: 1000
-  MyDBSubnetGroup:
-    Type: AWS::RDS::DBSubnetGroup
-    Properties:
-      DBSubnetGroupDescription: "Api Database Subnet Group"
-      SubnetIds:
-        Fn::Split:
-          - ","
-          -  Fn::ImportValue:
-               !Sub "${App}-${Env}-PrivateSubnets"
-  MyRDSInstanceRotationSecret:
-    Type: AWS::SecretsManager::Secret
-    Properties:
-      Description: 'This is my rds cluster secret'
-      GenerateSecretString:
-        SecretStringTemplate: !Sub '{"username": "${Name}"}'
-        GenerateStringKey: "password"
-        PasswordLength: 16
-        ExcludePunctuation: true
-
-  SecretRDSInstanceAttachment:
-    Type: AWS::SecretsManager::SecretTargetAttachment
-    Properties:
-      SecretId: !Ref MyRDSInstanceRotationSecret
-      TargetId: !Ref RDSCluster
-      TargetType: AWS::RDS::DBCluster
-
-  MySecretRotationSchedule:
-    Type: AWS::SecretsManager::RotationSchedule
-    DependsOn: SecretRDSInstanceAttachment
-    Properties:
-      SecretId: !Ref MyRDSInstanceRotationSecret
-      HostedRotationLambda:
-        RotationType: MySQLSingleUser
-        RotationLambdaName: SecretsManagerRotation
-        VpcSecurityGroupIds:
-          Fn::ImportValue:
-            !Sub "${App}-${Env}-EnvironmentSecurityGroup"
-        VpcSubnetIds:
-          Fn::ImportValue:
-            !Sub "${App}-${Env}-PrivateSubnets"
-      RotationRules:
-        AutomaticallyAfterDays: 30
+      Description: Grants CRUD access to DynamoDB
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Sid: DDBActions
+            Effect: Allow
+            Action:
+              - dynamodb:BatchGet*
+              - dynamodb:DescribeStream
+              - dynamodb:DescribeTable
+              - dynamodb:Get*
+              - dynamodb:Query
+              - dynamodb:Scan
+              - dynamodb:BatchWrite*
+              - dynamodb:Create*
+              - dynamodb:Delete*
+              - dynamodb:Update*
+              - dynamodb:PutItem
+            Resource: !Sub arn:aws:dynamodb:eu-central-1:user-id:table/ecs-${App}-${Env}-${Name}-*
+          - Sid: DDBLSIActions
+            Action:
+              - dynamodb:Query
+              - dynamodb:Scan
+            Effect: Allow
+            Resource: !Sub arn:aws:dynamodb:eu-central-1:user-id:table/ecs-${App}-${Env}-${Name}-*/Index/*
 
 Outputs:
-  DBHOST:
-    Description: "Database endpoint"
-    Value: !GetAtt RDSCluster.Endpoint.Address
-  DB:
-    Description: "Database name"
-    Value: !Ref Name
-  DBUSER:
-    Description: "Database username"
-    Value: !Ref Name
-  DBPORT:
-    Description: "Database port"
-    Value: 5432
-  DBPASS:
-    Description: "Database secret password"
-    Value: !Join [ "", [ !Ref "MyRDSInstanceRotationSecret", ":password" ] ]
+  DynamoDbAccessPolicy:
+    Description: "The IAM::ManagedPolicy to attach to the task role."
+    Value: !Ref DynamoDbAccessPolicy
