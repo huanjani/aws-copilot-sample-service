@@ -32,13 +32,13 @@ Resources:
               - dynamodb:Delete*
               - dynamodb:Update*
               - dynamodb:PutItem
-            Resource: !Sub arn:aws:dynamodb:eu-central-1:user-id:table/ecs-${App}-${Env}-${Name}-*
+            Resource: !Sub arn:aws:dynamodb:us-west-2:user-id:table/ecs-${App}-${Env}-${Name}-*
           - Sid: DDBLSIActions
             Action:
               - dynamodb:Query
               - dynamodb:Scan
             Effect: Allow
-            Resource: !Sub arn:aws:dynamodb:eu-central-1:user-id:table/ecs-${App}-${Env}-${Name}-*/Index/*
+            Resource: !Sub arn:aws:dynamodb:us-west-2:user-id:table/ecs-${App}-${Env}-${Name}-*/Index/*
 
 Outputs:
   DynamoDbAccessPolicy:
