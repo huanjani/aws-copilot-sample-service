@@ -30,7 +30,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="54fc852a-3f98-4349-8fa0-6a331eaa0e27" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/template.yml" beforeDir="false" afterPath="$PROJECT_DIR$/template.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,5 +68,11 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="-1093" y="150" width="586" height="490" key="find.popup" timestamp="1614131841373">
+      <screen x="-1600" y="-43" width="1600" height="877" />
+    </state>
+    <state x="-1093" y="150" width="586" height="490" key="find.popup/0.23.1280.777/-1600.-43.1600.877@-1600.-43.1600.877" timestamp="1614131841373" />
   </component>
 </project>
