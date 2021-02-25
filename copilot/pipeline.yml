@@ -1,7 +1,7 @@
 # This YAML file defines the relationship and deployment ordering of your environments.
 
 # The name of the pipeline
-name: pipeline-knuckles-huanjani-aws-copilot-sample-service
+name: pipeline-knuckles-aws-copilot-sample-service-%!s(MISSING)
 
 # The version of the schema used in this template
 version: 1
