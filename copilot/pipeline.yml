@@ -1,7 +1,7 @@
 # This YAML file defines the relationship and deployment ordering of your environments.
 
 # The name of the pipeline
-name: pipeline-muckles-aws-copilot-sample-service-v1
+name: pipeline-knuckles-aws-copilot-sample-service-v1
 
 # The version of the schema used in this template
 version: 1
@@ -15,7 +15,7 @@ source:
   # has the following properties: repository, branch.
   properties:
     access_token_secret: github-token-muckles-aws-copilot-sample-service
-    branch: master
+    branch: main
     repository: https://github.com/huanjani/aws-copilot-sample-service
 
 # The deployment section defines the order the pipeline will deploy
