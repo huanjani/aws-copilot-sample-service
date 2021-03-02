@@ -9,8 +9,8 @@ phases:
       - echo "cd into $CODEBUILD_SRC_DIR"
       - cd $CODEBUILD_SRC_DIR
       # Download the copilot linux binary.
-      - wget https://ecs-cli-v2-release.s3.amazonaws.com/copilot-linux-v1.2.0
-      - mv ./copilot-linux-v1.2.0 ./copilot-linux
+      - wget https://ecs-cli-v2-release.s3.amazonaws.com/copilot-linux-v1.3.0-1-g8af4e03f
+      - mv ./copilot-linux-v1.3.0-1-g8af4e03f ./copilot-linux
       - chmod +x ./copilot-linux
   build:
     commands:
@@ -35,6 +35,8 @@ phases:
       - envs=$(./copilot-linux env ls --json | jq '.environments[].name' | sed 's/"//g')
       # Generate the cloudformation templates.
       # The tag is the build ID but we replaced the colon ':' with a dash '-'.
+      # We truncate the tag (from the front) to 128 characters, the limit for Docker tags
+      # (https://docs.docker.com/engine/reference/commandline/tag/)
       - tag=$(sed 's/:/-/g' <<<"$CODEBUILD_BUILD_ID" | rev | cut -c 1-128 | rev)
       - >
         for env in $envs; do
@@ -57,6 +59,7 @@ phases:
             timestamp=$(date +%s)
             aws s3 cp "$ADDONSFILE" "s3://stackset-knuckles-infras-pipelinebuiltartifactbuc-1mu9wfoniefqr/manual/$timestamp/$workload.addons.stack.yml";
             jq --arg a "https://stackset-knuckles-infras-pipelinebuiltartifactbuc-1mu9wfoniefqr.s3.us-west-2.amazonaws.com/manual/$timestamp/$workload.addons.stack.yml" '.Parameters.AddonsTemplateURL = $a' ./infrastructure/$workload-test.params.json > "$tmp" && mv "$tmp" ./infrastructure/$workload-test.params.json
+            jq --arg a "https://stackset-knuckles-infras-pipelinebuiltartifactbuc-1mu9wfoniefqr.s3.us-west-2.amazonaws.com/manual/$timestamp/$workload.addons.stack.yml" '.Parameters.AddonsTemplateURL = $a' ./infrastructure/$workload-best.params.json > "$tmp" && mv "$tmp" ./infrastructure/$workload-best.params.json
           fi
         done;
       # Build images
