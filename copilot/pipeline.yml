@@ -14,6 +14,7 @@ source:
   # the artifacts should be sourced from. For example, the GitHub provider
   # has the following properties: repository, branch.
   properties:
+    access_token_secret: github-token-knuckles-aws-copilot-sample-service
     branch: master
     repository: https://github.com/huanjani/aws-copilot-sample-service
 
@@ -26,4 +27,11 @@ stages:
       # requires_approval: true
       # Optional: use test commands to validate this stage of your build.
       test_commands: [echo 'running tests', make test]
+
+    - # The name of the environment to deploy to.
+      name: best
+      # Optional: flag for manual approval action before deployment.
+      # requires_approval: true
+      # Optional: use test commands to validate this stage of your build.
+      # test_commands: [echo 'running tests', make test]
 
