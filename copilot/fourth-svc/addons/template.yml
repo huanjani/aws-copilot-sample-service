@@ -1,0 +1,46 @@
+Parameters:
+  App:
+    Type: String
+    Description: Your application's name.
+  Env:
+    Type: String
+    Description: The environment name your service, job, or workflow is being deployed to.
+  Name:
+    Type: String
+    Description: The name of the service, job, or workflow being deployed.
+Resources:
+  DynamoDbAccessPolicy:
+    Metadata:
+      'aws:copilot:description': 'An IAM ManagedPolicy for your service to access the demo-ecs db'
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: Grants CRUD access to DynamoDB
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Sid: DDBActions
+            Effect: Allow
+            Action:
+              - dynamodb:BatchGet*
+              - dynamodb:DescribeStream
+              - dynamodb:DescribeTable
+              - dynamodb:Get*
+              - dynamodb:Query
+              - dynamodb:Scan
+              - dynamodb:BatchWrite*
+              - dynamodb:Create*
+              - dynamodb:Delete*
+              - dynamodb:Update*
+              - dynamodb:PutItem
+            Resource: !Sub arn:aws:dynamodb:eu-central-1:user-id:table/ecs-${App}-${Env}-${Name}-*
+          - Sid: DDBLSIActions
+            Action:
+              - dynamodb:Query
+              - dynamodb:Scan
+            Effect: Allow
+            Resource: !Sub arn:aws:dynamodb:eu-central-1:user-id:table/ecs-${App}-${Env}-${Name}-*/Index/*
+
+Outputs:
+  DynamoDbAccessPolicy:
+    Description: "The IAM::ManagedPolicy to attach to the task role."
+    Value: !Ref DynamoDbAccessPolicy
