@@ -9,8 +9,8 @@ phases:
       - echo "cd into $CODEBUILD_SRC_DIR"
       - cd $CODEBUILD_SRC_DIR
       # Download the copilot linux binary.
-      - wget https://ecs-cli-v2-release.s3.amazonaws.com/copilot-linux-v1.3.0
-      - mv ./copilot-linux-v1.3.0 ./copilot-linux
+      - wget https://ecs-cli-v2-release.s3.amazonaws.com/copilot-linux-v1.3.0-2-gf0ebeb36
+      - mv ./copilot-linux-v1.3.0-2-gf0ebeb36 ./copilot-linux
       - chmod +x ./copilot-linux
   build:
     commands:
@@ -58,8 +58,7 @@ phases:
             tmp=$(mktemp)
             timestamp=$(date +%s)
             aws s3 cp "$ADDONSFILE" "s3://stackset-knuckles-infras-pipelinebuiltartifactbuc-1mu9wfoniefqr/manual/$timestamp/$workload.addons.stack.yml";
-            jq --arg a "https://stackset-knuckles-infras-pipelinebuiltartifactbuc-1mu9wfoniefqr.s3.us-west-2.amazonaws.com/manual/$timestamp/$workload.addons.stack.yml" '.Parameters.AddonsTemplateURL = $a' ./infrastructure/$workload-test.params.json > "$tmp" && mv "$tmp" ./infrastructure/$workload-test.params.json
-            jq --arg a "https://stackset-knuckles-infras-pipelinebuiltartifactbuc-1mu9wfoniefqr.s3.us-west-2.amazonaws.com/manual/$timestamp/$workload.addons.stack.yml" '.Parameters.AddonsTemplateURL = $a' ./infrastructure/$workload-best.params.json > "$tmp" && mv "$tmp" ./infrastructure/$workload-best.params.json
+            jq --arg a "https://stackset-knuckles-infras-pipelinebuiltartifactbuc-1mu9wfoniefqr.s3.us-west-2.amazonaws.com/manual/$timestamp/$workload.addons.stack.yml" '.Parameters.AddonsTemplateURL = $a' ./infrastructure/$workload-no-addons.params.json > "$tmp" && mv "$tmp" ./infrastructure/$workload-no-addons.params.json
           fi
         done;
       # Build images
