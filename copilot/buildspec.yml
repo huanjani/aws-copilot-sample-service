@@ -10,7 +10,7 @@ phases:
       - cd $CODEBUILD_SRC_DIR
       # Download the copilot linux binary.
       - wget https://ecs-cli-v2-release.s3.amazonaws.com/copilot-linux-v1.3.0
-      - mv ./copilot-linux-v1.3 ./copilot-linux
+      - mv ./copilot-linux-v1.3.0 ./copilot-linux
       - chmod +x ./copilot-linux
   build:
     commands:
