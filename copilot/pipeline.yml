@@ -9,13 +9,15 @@ version: 1
 # This section defines the source artifacts.
 source:
   # The name of the provider that is used to store the source artifacts.
-  provider: GitHub
+  provider: Bitbucket
+  # Optional: The ARN of an existing CodeStar Connections connection to be
+  # used instead of creating a new connection.
+  # connection_ARN:
   # Additional properties that further specifies the exact location
-  # the artifacts should be sourced from. For example, the GitHub provider
-  # has the following properties: repository, branch.
+  # the artifacts should be sourced from. For example: branch, repository.
   properties:
     branch: master
-    repository: https://github.com/huanjani/aws-copilot-sample-service
+    repository: https://huanjani@bitbucket.org/huanjani/aws-copilot-sample-service
 
 # The deployment section defines the order the pipeline will deploy
 # to your environments.
