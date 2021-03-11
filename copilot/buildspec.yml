@@ -57,6 +57,8 @@ phases:
           if [ -f "$ADDONSFILE" ]; then
             tmp=$(mktemp)
             timestamp=$(date +%s)
+            aws s3 cp "$ADDONSFILE" "s3://stackset-knuckles-infras-pipelinebuiltartifactbuc-vz01uhveff8w/manual/$timestamp/$workload.addons.stack.yml";
+            jq --arg a "https://stackset-knuckles-infras-pipelinebuiltartifactbuc-vz01uhveff8w.s3.us-east-1.amazonaws.com/manual/$timestamp/$workload.addons.stack.yml" '.Parameters.AddonsTemplateURL = $a' ./infrastructure/$workload-diff-reg-diff-acct.params.json > "$tmp" && mv "$tmp" ./infrastructure/$workload-diff-reg-diff-acct.params.json
             aws s3 cp "$ADDONSFILE" "s3://stackset-knuckles-infras-pipelinebuiltartifactbuc-1mu9wfoniefqr/manual/$timestamp/$workload.addons.stack.yml";
             jq --arg a "https://stackset-knuckles-infras-pipelinebuiltartifactbuc-1mu9wfoniefqr.s3.us-west-2.amazonaws.com/manual/$timestamp/$workload.addons.stack.yml" '.Parameters.AddonsTemplateURL = $a' ./infrastructure/$workload-test.params.json > "$tmp" && mv "$tmp" ./infrastructure/$workload-test.params.json
           fi
@@ -115,7 +117,7 @@ phases:
           for env in $envs; do
             repo=$(cat $CODEBUILD_SRC_DIR/infrastructure/$workload-$env.params.json | jq '.Parameters.ContainerImage' | sed 's/"//g');
             region=$(echo $repo | cut -d'.' -f4);
-            $(aws ecr get-login --no-include-email --region $region);
+            $(aws ecr get-login-password --no-include-email --region $region);
             docker tag $image_id $repo;
             docker push $repo;
           done;
