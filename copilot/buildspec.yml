@@ -117,7 +117,7 @@ phases:
           for env in $envs; do
             repo=$(cat $CODEBUILD_SRC_DIR/infrastructure/$workload-$env.params.json | jq '.Parameters.ContainerImage' | sed 's/"//g');
             region=$(echo $repo | cut -d'.' -f4);
-            $(aws ecr get-login-password);
+            $(aws ecr get-login --no-include-email --region $region);
             docker tag $image_id $repo;
             docker push $repo;
           done;
