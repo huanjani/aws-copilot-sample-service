@@ -118,7 +118,7 @@ phases:
             repo=$(cat $CODEBUILD_SRC_DIR/infrastructure/$workload-$env.params.json | jq '.Parameters.ContainerImage' | sed 's/"//g');
             region=$(echo $repo | cut -d'.' -f4);
             echo $CODEBUILD_WEBHOOK_ACTOR_ACCOUNT_ID	
-            $(aws ecr get-login-password --region $region | docker login --username AWS --password-stdin $CODEBUILD_WEBHOOK_ACTOR_ACCOUNT_ID.dkr.ecr.$region.amazonaws.com );
+            $(aws ecr get-login-password --region $region | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$region.amazonaws.com );
             docker tag $image_id $repo;
             docker push $repo;
           done;
