@@ -14,7 +14,6 @@ source:
   # the artifacts should be sourced from. For example, the GitHub provider
   # has the following properties: repository, branch.
   properties:
-    access_token_secret: github-token-knuckles-aws-copilot-sample-service
     branch: master
     repository: https://github.com/huanjani/aws-copilot-sample-service
 
