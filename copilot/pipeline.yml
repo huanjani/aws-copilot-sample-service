@@ -26,5 +26,5 @@ stages:
       # requires_approval: true
       # Optional: use test commands to validate this stage of your build.
       test_commands: 
-        - docker build -t hello-nginx -f Test.dockerfile
+        - docker build -t hello-nginx
 
