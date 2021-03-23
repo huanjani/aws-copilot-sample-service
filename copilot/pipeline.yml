@@ -25,5 +25,5 @@ stages:
       # Optional: flag for manual approval action before deployment.
       # requires_approval: true
       # Optional: use test commands to validate this stage of your build.
-      test_commands: [- docker build -t hello-nginx -f ./Test.dockerfile]
+      test_commands: [- docker build -t hello-nginx -f Test.dockerfile]
 
