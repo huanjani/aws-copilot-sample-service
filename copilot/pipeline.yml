@@ -1,7 +1,7 @@
 # This YAML file defines the relationship and deployment ordering of your environments.
 
 # The name of the pipeline
-name: pipeline-knuckles-aws-copilot-sample-service
+name: pipeline-knuckles-aws-sample
 
 # The version of the schema used in this template
 version: 1
@@ -9,15 +9,13 @@ version: 1
 # This section defines the source artifacts.
 source:
   # The name of the provider that is used to store the source artifacts.
-  provider: GitHub
+  provider: CodeCommit
   # Additional properties that further specifies the exact location
   # the artifacts should be sourced from. For example, the GitHub provider
   # has the following properties: repository, branch.
   properties:
     branch: master
-    repository: https://github.com/huanjani/aws-copilot-sample-service
-    # Optional: specify the name of an existing CodeStar Connections connection.
-    # connection_name: a-connection
+    repository: https://us-west-2.console.aws.amazon.com/codesuite/codecommit/repositories/aws-sample/browse
 
 # The deployment section defines the order the pipeline will deploy
 # to your environments.
@@ -27,5 +25,5 @@ stages:
       # Optional: flag for manual approval action before deployment.
       # requires_approval: true
       # Optional: use test commands to validate this stage of your build.
-      # test_commands: [echo 'running tests', make test]
+      test_commands: [- docker build -t hello-nginx -f ./Test.dockerfile]
 
