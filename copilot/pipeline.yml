@@ -16,6 +16,8 @@ source:
   properties:
     branch: master
     repository: https://github.com/huanjani/aws-copilot-sample-service
+    # Optional: specify the name of an existing CodeStar Connections connection.
+    # connection_name: a-connection
 
 # The deployment section defines the order the pipeline will deploy
 # to your environments.
