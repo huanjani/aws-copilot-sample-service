@@ -9,8 +9,8 @@ phases:
       - echo "cd into $CODEBUILD_SRC_DIR"
       - cd $CODEBUILD_SRC_DIR
       # Download the copilot linux binary.
-      - wget https://ecs-cli-v2-release.s3.amazonaws.com/copilot-linux-v1.3.0
-      - mv ./copilot-linux-v1.3.0 ./copilot-linux
+      - wget https://ecs-cli-v2-release.s3.amazonaws.com/copilot-linux-v1.4.0-16-g7507d883
+      - mv ./copilot-linux-v1.4.0-16-g7507d883 ./copilot-linux
       - chmod +x ./copilot-linux
   build:
     commands:
@@ -116,7 +116,7 @@ phases:
           for env in $envs; do
             repo=$(cat $CODEBUILD_SRC_DIR/infrastructure/$workload-$env.params.json | jq '.Parameters.ContainerImage' | sed 's/"//g');
             region=$(echo $repo | cut -d'.' -f4);
-            $(aws ecr get-login --no-include-email --region $region);
+            $(aws ecr get-login-password --region $region | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$region.amazonaws.com);
             docker tag $image_id $repo;
             docker push $repo;
           done;
