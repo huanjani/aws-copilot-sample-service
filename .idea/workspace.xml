@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="890a9224-3b7d-41fc-b1f1-8692e4b9bbcb" name="Default Changelist" comment="" />
+    <list default="true" id="890a9224-3b7d-41fc-b1f1-8692e4b9bbcb" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/copilot/backend/manifest.yml" beforeDir="false" afterPath="$PROJECT_DIR$/copilot/backend/manifest.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/copilot/buildspec.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/copilot/pipeline.yml" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,5 +31,16 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="412" y="270" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1616718451114">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="412" y="270" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1440.877@0.23.1440.877" timestamp="1616718451114" />
+    <state x="456" y="216" width="568" height="490" key="find.popup" timestamp="1616727471835">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="1787" y="-36" width="586" height="490" key="find.popup/0.23.1280.777/1280.-229.1600.877@1280.-229.1600.877" timestamp="1616610738570" />
+    <state x="456" y="216" width="568" height="490" key="find.popup/0.23.1440.877@0.23.1440.877" timestamp="1616727471835" />
   </component>
 </project>
